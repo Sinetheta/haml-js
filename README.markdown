@@ -69,17 +69,17 @@ The following input:
 
 Produces the following JavaScript expression:
 
-    "<div id=\"home\">" + 
+    "<div id=\"home\">" +
     title +
-    "\n" + 
-    "<ul class=\"menu\">" + 
-    "<li>" + 
-    "Go Home\n" + 
-    "</li>" + 
-    "<li>" + 
-    "Go Back\n" + 
-    "</li>" + 
-    "</ul>" + 
+    "\n" +
+    "<ul class=\"menu\">" +
+    "<li>" +
+    "Go Home\n" +
+    "</li>" +
+    "<li>" +
+    "Go Back\n" +
+    "</li>" +
+    "</ul>" +
     "</div>"
 
 ### Haml.optimize(js) -> optimized JavaScript expression
@@ -88,7 +88,7 @@ Takes the output of compile and optimizes it to run faster with the tradeoff of 
 
 With the previous input it outputs:
 
-    "<div id=\"home\">" + 
+    "<div id=\"home\">" +
     title +
     "\n<ul class=\"menu\"><li>Go Home\n</li><li>Go Back\n</li></ul></div>"
 
@@ -109,7 +109,7 @@ The three recognized `options` are:
  - **context**: This is the `this` context within the haml template.
  - **locals**: This is an object that's used in the `with` scope.  Basically it creates local variables and function accessible to the haml template.
  - **optimize**: This is a flag to tell the compiler to use the extra optimizations.
- 
+
 See [test.js][] for an example usage of Haml.render
 
 ## Executable JavaScript (not output)
@@ -172,7 +172,7 @@ If you want an HTML comment that **WILL** be in the final HTML, begin with `/`
 
 ## Whitespace
 
-By default, Haml.js **has no whitespace between tags**.  In this way, Haml.js is the opposite of Haml in Ruby.  You can insert whitespace around or inside tags with `>` and `<`, respectively. 
+By default, Haml.js **has no whitespace between tags**.  In this way, Haml.js is the opposite of Haml in Ruby.  You can insert whitespace around or inside tags with `>` and `<`, respectively.
 
 Most commonly, you want to have an `a` or `span` with whitespace around it:
 
@@ -205,9 +205,9 @@ You probably don't want to put unescaped user input right into your html.  http:
 Let's assume we have a malicious username: `name = "<script>...</script>"`
 
 Always unsafe:
-      
+
       %span!= name
-      
+
       <span><script>...</script></span>
 
 Always safe:
