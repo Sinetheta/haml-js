@@ -1,10 +1,9 @@
 var fs = require('fs');
+var path = require('path');
 var assert = require('assert');
 var sys = require('sys');
 
 var Haml = require("../lib/haml");
-
-
 
 function compare(haml_file, haml, expected, scope, options){
   options || (options = {});
@@ -19,7 +18,7 @@ function compare(haml_file, haml, expected, scope, options){
     sys.puts(haml_file + " Passed")
 
     actual = Haml.render(haml, {context:scope.context, locals:scope.locals})
-    
+
     assert.equal(actual, expected);
     sys.puts(haml_file + " Haml.render Passed")
 
@@ -42,7 +41,7 @@ function compare(haml_file, haml, expected, scope, options){
 }
 
 
-fs.readdir('.', function (err, files) {
+fs.readdir(__dirname, function (err, files) {
   files.forEach(function (haml_file) {
     var m = haml_file.match(/^(.*)\.haml/),
         base;
@@ -52,8 +51,8 @@ fs.readdir('.', function (err, files) {
     base = m[1];
 
     function load_haml(scope) {
-      fs.readFile(haml_file, "utf8", function (err, haml) {
-        fs.readFile(base + ".html", "utf8", function (err, expected) {
+      fs.readFile(path.join(__dirname, haml_file), "utf8", function (err, haml) {
+        fs.readFile(path.join(__dirname, base + ".html"), "utf8", function (err, expected) {
           compare(haml_file, haml, expected, scope)
         });
       });
@@ -61,7 +60,7 @@ fs.readdir('.', function (err, files) {
 
     // Load scope
     if (files.indexOf(base + ".js") >= 0) {
-      fs.readFile(base + ".js", "utf8", function (err, js) {
+      fs.readFile(path.join(__dirname, base  + ".js"), "utf8", function (err, js) {
         load_haml(eval("(" + js + ")"));
       });
     } else {
@@ -71,7 +70,7 @@ fs.readdir('.', function (err, files) {
 });
 
 (function(){
-  var hamlSrc = fs.readFileSync("alt_attribs.haml", "utf8");
+  var hamlSrc = fs.readFileSync(path.join(__dirname, "alt_attribs.haml"), "utf8");
   var includeEscape = Haml(hamlSrc).toString();
   var customEscape = Haml(hamlSrc, {customEscape:"$esc"}).toString();
   try{
@@ -85,9 +84,9 @@ fs.readdir('.', function (err, files) {
 
 
 (function(){
-  var hamlSrc = fs.readFileSync("./other/custom_escape.haml", "utf8");
-  var expected = fs.readFileSync("./other/custom_escape.html", "utf8");
-  var scope = eval("(" + fs.readFileSync("escaping.js") + ")");
+  var hamlSrc = fs.readFileSync(path.join(__dirname, "other/custom_escape.haml"), "utf8");
+  var expected = fs.readFileSync(path.join(__dirname, "other/custom_escape.html"), "utf8");
+  var scope = eval("(" + fs.readFileSync(path.join(__dirname, "escaping.js")) + ")");
 
   sys.puts("custom_escape" + " Begun")
   var jsFn = Haml(hamlSrc, {customEscape:"$esc"});
@@ -110,8 +109,8 @@ fs.readdir('.', function (err, files) {
 
 
 (function(){
-  var hamlSrc = fs.readFileSync("./other/escape_by_default.haml", "utf8");
-  var expected = fs.readFileSync("./other/escape_by_default.html", "utf8");
+  var hamlSrc = fs.readFileSync(path.join(__dirname, "other/escape_by_default.haml"), "utf8");
+  var expected = fs.readFileSync(path.join(__dirname, "other/escape_by_default.html"), "utf8");
   var scope = {};
 
   sys.puts("escape_by_default" + " Begun")
