@@ -307,6 +307,10 @@ Then, the output template function definition will call `MyApp.esc(string)` and 
 
 If you want to use this project and something is missing then send me a message.  I'm very busy and have several open source projects I manage.  I'll contribute to this project as I have time, but if there is more interest for some particular aspect, I'll work on it a lot faster.  Also you're welcome to fork this project and send me patches/pull-requests.
 
+### Testing
+
+`npm test` to run the test suite.
+
 ## About Performance
 
 The haml compiler isn't built for speed, it's built for maintainability.  The actual generated templates, however are blazing fast.  I benchmarked them with over 65 million renders per second on a small (20 line) template with some dynamic data on my laptop.  Compare this to the 629 compiles per second I got out of the compiler.  The idea is that you pre-compile your templates and reuse them on every request.  While 629 per second is nothing compared to 65 million, that still means that your server with over 600 different views can boot up in about a second.  I think that's fine for something that only happens every few weeks.

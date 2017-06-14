@@ -10,6 +10,9 @@
     "bin": {
         "haml-js": "./lib/cli.js"
     },
+    "scripts": {
+      "test": "node test/test.js"
+    },
     "author": "Aaron Blohowiak <aaron.blohowiak@gmail.com>, Tim Caswell <tim@creationix.com>",
     "version": "0.4.3"
 }
